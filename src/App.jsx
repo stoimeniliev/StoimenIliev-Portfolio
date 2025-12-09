@@ -1,22 +1,22 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, ExternalLink, Cpu, Sparkles, Smile, ArrowRight } from 'lucide-react';
+import { Github, Linkedin, Mail, ExternalLink, Cpu, Sparkles, Smile, ArrowRight, Video } from 'lucide-react';
 import './index.css';
 
 const projects = {
   productivity: [
     {
       id: 1,
-      title: 'TaskFlow AI',
-      description: 'Intelligent task prioritization engine that adapts to your working style and energy levels.',
+      title: 'Zfit - Zalando AI Try on',
+      description: 'Chrome extension for Zalando that allows you to try on clothes virtually.',
       image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&auto=format&fit=crop&q=60',
       link: '#',
-      tags: ['React', 'OpenAI', 'Node.js']
+      tags: ['Chrome extension', 'Supabase', 'Node.js', 'LLM']
     },
     {
       id: 2,
-      title: 'FocusSync',
-      description: 'Real-time team synchronization tool for remote product management squads.',
+      title: 'Superhero',
+      description: 'OpenSource & Free to use Grammarly / Superhuman alternative.',
       image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&auto=format&fit=crop&q=60',
       link: '#',
       tags: ['Vue', 'Firebase', 'WebRTC']
@@ -25,7 +25,7 @@ const projects = {
       id: 3,
       title: 'DataViz Pro',
       description: 'Automated dashboard generator turning CSVs into beautiful actionable insights.',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=60',
+      image: 'https://images.unsplash.com/photo-1551288049-bebdae4e38f71?w=800&auto=format&fit=crop&q=60',
       link: '#',
       tags: ['Python', 'D3.js', 'FastAPI']
     }
@@ -33,26 +33,32 @@ const projects = {
   meme: [
     {
       id: 1,
-      title: 'CatGPT',
-      description: 'Finally understand what your cat is meowing about. Powered by fine-tuned models on meow-datasets.',
+      title: 'Notepad Ultra',
+      description: 'A parody text editor that satirizes aggressive subscription models by gating basic features like backspace, spell-check, and auto-save behind paywalls.',
       image: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800&auto=format&fit=crop&q=60',
-      link: '#',
+      link: 'https://stoimeniliev.github.io/NotepadUltra/',
+      github: '#',
+      tiktok: '#',
       tags: ['Meow', 'GPT-4', 'React']
     },
     {
       id: 2,
-      title: 'Potatoifier',
+      title: 'Finder Ultra',
       description: 'Uses advanced computer vision to turn your friends into high-resolution potatoes.',
       image: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=800&auto=format&fit=crop&q=60',
-      link: '#',
+      link: 'https://stoimeniliev.github.io/folder-ultra/',
+      github: '#',
+      tiktok: '#',
       tags: ['CV works', 'Python', 'Potato']
     },
     {
       id: 3,
-      title: 'ExcuseGenerator 3000',
+      title: 'Breathify',
       description: 'Never be late without a valid reason again. Generates wildly plausible excuses on demand.',
       image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop&q=60',
       link: '#',
+      github: '#',
+      tiktok: '#',
       tags: ['AI', 'Humor', 'Svelte']
     }
   ]
@@ -90,10 +96,22 @@ const ProjectCard = ({ project }) => (
         alt={project.title}
         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
       />
-      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-        <a href={project.link} className="flex items-center gap-3 bg-white text-black px-6 py-3 md:px-8 md:py-4 rounded-full font-bold text-base md:text-lg 2xl:text-2xl hover:bg-gray-200 transition-colors">
+      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-4 gap-4">
+        <a href={project.link} className="flex items-center gap-2 bg-white text-black px-6 py-3 md:px-8 md:py-4 rounded-full font-bold text-base md:text-lg 2xl:text-2xl hover:bg-gray-200 transition-colors">
           View Project <ExternalLink size={20} className="2xl:w-7 2xl:h-7" />
         </a>
+        <div className="flex gap-4">
+          {project.github && (
+            <a href={project.github} className="flex items-center gap-2 bg-gray-900 text-white px-6 py-3 rounded-full font-bold text-sm md:text-base hover:bg-gray-800 transition-colors border border-gray-700">
+              <Github size={18} className="2xl:w-5 2xl:h-5" /> Code
+            </a>
+          )}
+          {project.tiktok && (
+            <a href={project.tiktok} className="flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full font-bold text-sm md:text-base hover:bg-gray-900 transition-colors border border-gray-700">
+              <Video size={18} className="2xl:w-5 2xl:h-5" /> Watch
+            </a>
+          )}
+        </div>
       </div>
     </div>
     <div className="p-6 md:p-8 lg:p-10 2xl:p-12 flex-1 flex flex-col">
@@ -212,7 +230,7 @@ function App() {
           <div className="space-y-4 lg:space-y-6 2xl:space-y-8">
             {/* Career Timeline - Simplified */}
             {[
-              { role: 'Senior Product Manager', company: 'TechCorp AI', year: '2023 - Present' },
+              { role: 'Product Lead', company: 'Getsafe', year: '2023 - Present' },
               { role: 'Product Lead', company: 'StartUp Inc.', year: '2020 - 2023' },
               { role: 'Product Analyst', company: 'BigData Co.', year: '2018 - 2020' },
             ].map((job, index) => (
@@ -240,7 +258,7 @@ function App() {
       {/* Productivity Projects */}
       <Section id="productivity" title="AI for Productivity" icon={Sparkles}>
         <p className="text-center text-gray-400 max-w-4xl 2xl:max-w-5xl mx-auto mb-12 lg:mb-20 text-lg md:text-2xl 2xl:text-3xl">
-          Tools designed to enhance human capability and streamline workflows using the latest in LLM technology.
+          Tools designed to enhance and streamline workflows using the latest in LLM technology.
         </p>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10 2xl:gap-12">
           {projects.productivity.map(project => (
@@ -250,9 +268,9 @@ function App() {
       </Section>
 
       {/* Meme Projects */}
-      <Section id="fun" title="Just for Fun" icon={Smile}>
+      <Section id="fun" title="Parody apps" icon={Smile}>
         <p className="text-center text-gray-400 max-w-4xl 2xl:max-w-5xl mx-auto mb-12 lg:mb-20 text-lg md:text-2xl 2xl:text-3xl">
-          Because AI shouldn't always be serious. Here are some experiments that explore the lighter side of technology.
+          Parody apps that make fun of the current trends of subscriptions and microtransactions on anything.
         </p>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10 2xl:gap-12">
           {projects.meme.map(project => (
