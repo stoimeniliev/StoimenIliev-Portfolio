@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, ExternalLink, Cpu, Sparkles, Smile, ArrowRight, Video, Rocket, Building2, GraduationCap } from 'lucide-react';
+import { Github, Linkedin, Mail, ExternalLink, Cpu, Sparkles, Smile, ArrowRight, Video, Rocket, Building2, GraduationCap, Shield, TrendingUp } from 'lucide-react';
 import './index.css';
 
 const projects = {
@@ -233,25 +233,33 @@ function App() {
               {
                 company: 'Getsafe',
                 year: '2024 – 2025',
-                logo: 'https://logo.clearbit.com/getsafe.eu',
+                icon: Shield,
+                color: 'text-indigo-400',
+                bg: 'bg-indigo-500/20',
                 desc: 'Product Lead for Growth, Engagement, and Monetisation. Shipped the Safepoints rewards program and the Freemium Travel Insurance product, expanding activation and top-of-funnel reach.'
               },
               {
                 company: 'Trade Republic',
                 year: '2021 – 2024',
-                logo: 'https://logo.clearbit.com/traderepublic.com',
+                icon: TrendingUp,
+                color: 'text-cyan-400',
+                bg: 'bg-cyan-500/20',
                 desc: 'One of the first customer-facing PMs during hyper-growth (joined when <40 Tech Org, <100k users). Delivered core zero-to-one initiatives including the Web Trading Platform, a unified internal workspace used company-wide, and an AI-first customer service system that replaced Zendesk.'
               },
               {
                 company: 'Cornell University — MBA',
                 year: '2019 – 2020',
-                logo: 'https://logo.clearbit.com/cornell.edu',
+                icon: GraduationCap,
+                color: 'text-red-400',
+                bg: 'bg-red-500/20',
                 desc: 'Merit-based scholarship + Fulbright. Focus on Leadership, Strategy, and AI.'
               },
               {
                 company: 'Product manager, Software Engineer, Solopreneur',
                 year: '2009 – 2019',
-                logo: 'rocket',
+                icon: Rocket,
+                color: 'text-purple-400',
+                bg: 'bg-purple-500/20',
                 desc: 'A decade of experience as a founder, full-stack engineer, and product builder across various companies and projects.'
               },
             ].map((job, index) => (
@@ -263,12 +271,8 @@ function App() {
                 transition={{ delay: index * 0.1 }}
                 className="flex items-start gap-4 lg:gap-6 2xl:gap-8 p-4 lg:p-8 2xl:p-10 rounded-xl lg:rounded-2xl 2xl:rounded-3xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/5"
               >
-                <div className={`w-12 h-12 lg:w-20 lg:h-20 2xl:w-24 2xl:h-24 rounded-full flex items-center justify-center flex-shrink-0 mt-1 overflow-hidden ${job.logo === 'rocket' ? 'bg-indigo-500/20 text-indigo-400' : 'bg-white'}`}>
-                  {job.logo === 'rocket' ? (
-                    <Rocket className="w-6 h-6 lg:w-10 lg:h-10 2xl:w-12 2xl:h-12" />
-                  ) : (
-                    <img src={job.logo} alt={job.company} className="w-full h-full object-cover" />
-                  )}
+                <div className={`w-12 h-12 lg:w-20 lg:h-20 2xl:w-24 2xl:h-24 rounded-full flex items-center justify-center flex-shrink-0 mt-1 ${job.bg} ${job.color}`}>
+                  <job.icon className="w-6 h-6 lg:w-10 lg:h-10 2xl:w-12 2xl:h-12" />
                 </div>
                 <div className="text-left">
                   <h4 className="font-bold text-lg lg:text-3xl 2xl:text-4xl text-white mb-2 lg:mb-3 2xl:mb-4">
