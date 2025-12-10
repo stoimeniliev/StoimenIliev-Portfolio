@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, ExternalLink, Cpu, Sparkles, Smile, ArrowRight, Video } from 'lucide-react';
+import { Github, Linkedin, Mail, ExternalLink, Cpu, Sparkles, Smile, ArrowRight, Video, Rocket, Building2, GraduationCap } from 'lucide-react';
 import './index.css';
 
 const projects = {
@@ -208,7 +208,7 @@ function App() {
 
       {/* About Section */}
       <Section id="about" title="About Me" icon={Cpu}>
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 2xl:gap-24 items-center">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 2xl:gap-24 items-start">
           <div className="space-y-6 lg:space-y-8 2xl:space-y-10 text-gray-300 text-lg md:text-xl 2xl:text-3xl text-center lg:text-left">
             <p>
               With over 15 years building products as a product manager, software engineer and solopreneur - I focus on turning complex technology into intuitive experiences that scale.
@@ -233,21 +233,25 @@ function App() {
               {
                 company: 'Getsafe',
                 year: '2024 – 2025',
+                logo: 'https://logo.clearbit.com/getsafe.eu',
                 desc: 'Product Lead for Growth, Engagement, and Monetisation. Shipped the Safepoints rewards program and the Freemium Travel Insurance product, expanding activation and top-of-funnel reach.'
               },
               {
                 company: 'Trade Republic',
                 year: '2021 – 2024',
+                logo: 'https://logo.clearbit.com/traderepublic.com',
                 desc: 'One of the first customer-facing PMs during hyper-growth (joined when <40 Tech Org, <100k users). Delivered core zero-to-one initiatives including the Web Trading Platform, a unified internal workspace used company-wide, and an AI-first customer service system that replaced Zendesk.'
               },
               {
                 company: 'Cornell University — MBA',
                 year: '2019 – 2020',
+                logo: 'https://logo.clearbit.com/cornell.edu',
                 desc: 'Merit-based scholarship + Fulbright. Focus on Leadership, Strategy, and AI.'
               },
               {
                 company: 'Product manager, Software Engineer, Solopreneur',
                 year: '2009 – 2019',
+                logo: 'rocket',
                 desc: 'A decade of experience as a founder, full-stack engineer, and product builder across various companies and projects.'
               },
             ].map((job, index) => (
@@ -259,8 +263,12 @@ function App() {
                 transition={{ delay: index * 0.1 }}
                 className="flex items-start gap-4 lg:gap-6 2xl:gap-8 p-4 lg:p-8 2xl:p-10 rounded-xl lg:rounded-2xl 2xl:rounded-3xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/5"
               >
-                <div className="w-12 h-12 lg:w-20 lg:h-20 2xl:w-24 2xl:h-24 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold text-xs lg:text-xl 2xl:text-2xl flex-shrink-0 mt-1">
-                  {job.year.split('–')[0].split('-')[0].trim()}
+                <div className={`w-12 h-12 lg:w-20 lg:h-20 2xl:w-24 2xl:h-24 rounded-full flex items-center justify-center flex-shrink-0 mt-1 overflow-hidden ${job.logo === 'rocket' ? 'bg-indigo-500/20 text-indigo-400' : 'bg-white'}`}>
+                  {job.logo === 'rocket' ? (
+                    <Rocket className="w-6 h-6 lg:w-10 lg:h-10 2xl:w-12 2xl:h-12" />
+                  ) : (
+                    <img src={job.logo} alt={job.company} className="w-full h-full object-cover" />
+                  )}
                 </div>
                 <div className="text-left">
                   <h4 className="font-bold text-lg lg:text-3xl 2xl:text-4xl text-white mb-2 lg:mb-3 2xl:mb-4">
