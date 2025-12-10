@@ -211,28 +211,49 @@ function App() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 2xl:gap-24 items-center">
           <div className="space-y-6 lg:space-y-8 2xl:space-y-10 text-gray-300 text-lg md:text-xl 2xl:text-3xl text-center lg:text-left">
             <p>
-              With over 8 years of experience in product management, I specialize in translating complex technical capabilities into seamless user experiences.
+              With over 15 years building products as a product manager, software engineer and solopreneur - I focus on turning complex technology into intuitive experiences that scale.
             </p>
             <p>
-              Currently, I am obsessed with **Generative AI** and how it can redefine productivity. I don't just manage products; I build prototypes, experiment with new models, and occasionally make memes to keep the internet fun.
+              I’ve built zero-to-one products, led cross-functional teams, and helped companies grow from early-stage momentum to millions of users. Currently really passionate about AI.
             </p>
             <div className="grid grid-cols-2 gap-4 lg:gap-8 2xl:gap-10 mt-8 lg:mt-12 2xl:mt-16">
               <div className="p-4 lg:p-8 2xl:p-10 bg-white/5 rounded-2xl 2xl:rounded-3xl border border-white/5">
-                <h4 className="text-3xl lg:text-5xl 2xl:text-7xl font-bold text-white mb-1 lg:mb-2 2xl:mb-4">50+</h4>
-                <div className="text-sm lg:text-lg 2xl:text-2xl text-gray-400">Products Launched</div>
+                <h4 className="text-3xl lg:text-5xl 2xl:text-7xl font-bold text-white mb-1 lg:mb-2 2xl:mb-4">15y+</h4>
+                <div className="text-sm lg:text-lg 2xl:text-2xl text-gray-400">Experience</div>
               </div>
               <div className="p-4 lg:p-8 2xl:p-10 bg-white/5 rounded-2xl 2xl:rounded-3xl border border-white/5">
-                <h4 className="text-3xl lg:text-5xl 2xl:text-7xl font-bold text-white mb-1 lg:mb-2 2xl:mb-4">10k+</h4>
-                <div className="text-sm lg:text-lg 2xl:text-2xl text-gray-400">Active Users</div>
+                <h4 className="text-3xl lg:text-5xl 2xl:text-7xl font-bold text-white mb-1 lg:mb-2 2xl:mb-4">Zero</h4>
+                <div className="text-sm lg:text-lg 2xl:text-2xl text-gray-400">To One</div>
               </div>
             </div>
           </div>
           <div className="space-y-4 lg:space-y-6 2xl:space-y-8">
-            {/* Career Timeline - Simplified */}
+            {/* Career Timeline */}
             {[
-              { role: 'Product Lead', company: 'Getsafe', year: '2023 - Present' },
-              { role: 'Product Lead', company: 'StartUp Inc.', year: '2020 - 2023' },
-              { role: 'Product Analyst', company: 'BigData Co.', year: '2018 - 2020' },
+              {
+                role: 'Product Lead',
+                company: 'Getsafe',
+                year: '2024 – 2025',
+                desc: 'Product Lead for Growth, Engagement, and Monetisation. Shipped the Safepoints rewards program and the Freemium Travel Insurance product.'
+              },
+              {
+                role: 'Product Manager',
+                company: 'Trade Republic',
+                year: '2021 – 2024',
+                desc: 'Hyper-growth phase (joined <40 Tech Org). Delivered zero-to-one initiatives including Web Trading Platform and AI-first customer service system.'
+              },
+              {
+                role: 'MBA Candidate',
+                company: 'Cornell University',
+                year: '2019 – 2020',
+                desc: 'Merit-based scholarship + Fulbright. Focus on Leadership, Strategy, and AI.'
+              },
+              {
+                role: 'Founder & Engineer',
+                company: 'Solopreneur',
+                year: '2009 – 2019',
+                desc: 'A decade of experience as a founder, full-stack engineer, and product builder across various companies and projects.'
+              },
             ].map((job, index) => (
               <motion.div
                 key={index}
@@ -242,12 +263,13 @@ function App() {
                 transition={{ delay: index * 0.1 }}
                 className="flex items-center gap-4 lg:gap-6 2xl:gap-8 p-4 lg:p-8 2xl:p-10 rounded-xl lg:rounded-2xl 2xl:rounded-3xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/5"
               >
-                <div className="w-12 h-12 lg:w-20 lg:h-20 2xl:w-24 2xl:h-24 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold text-base lg:text-2xl 2xl:text-3xl flex-shrink-0">
-                  {job.year.substring(0, 2)}
+                <div className="w-12 h-12 lg:w-20 lg:h-20 2xl:w-24 2xl:h-24 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold text-xs lg:text-xl 2xl:text-2xl flex-shrink-0">
+                  {job.year.split('–')[0].trim()}
                 </div>
                 <div className="text-left">
                   <h4 className="font-bold text-lg lg:text-3xl 2xl:text-4xl text-white mb-1 lg:mb-2 2xl:mb-3">{job.role}</h4>
-                  <p className="text-gray-400 text-sm lg:text-xl 2xl:text-2xl">{job.company} • {job.year}</p>
+                  <p className="text-gray-400 text-sm lg:text-xl 2xl:text-2xl mb-2">{job.company} • {job.year}</p>
+                  <p className="text-gray-500 text-xs lg:text-lg 2xl:text-xl leading-relaxed">{job.desc}</p>
                 </div>
               </motion.div>
             ))}
