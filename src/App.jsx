@@ -231,26 +231,22 @@ function App() {
             {/* Career Timeline */}
             {[
               {
-                role: 'Product Lead',
                 company: 'Getsafe',
                 year: '2024 – 2025',
-                desc: 'Product Lead for Growth, Engagement, and Monetisation. Shipped the Safepoints rewards program and the Freemium Travel Insurance product.'
+                desc: 'Product Lead for Growth, Engagement, and Monetisation. Shipped the Safepoints rewards program and the Freemium Travel Insurance product, expanding activation and top-of-funnel reach.'
               },
               {
-                role: 'Product Manager',
                 company: 'Trade Republic',
                 year: '2021 – 2024',
-                desc: 'Hyper-growth phase (joined <40 Tech Org). Delivered zero-to-one initiatives including Web Trading Platform and AI-first customer service system.'
+                desc: 'One of the first customer-facing PMs during hyper-growth (joined when <40 Tech Org, <100k users). Delivered core zero-to-one initiatives including the Web Trading Platform, a unified internal workspace used company-wide, and an AI-first customer service system that replaced Zendesk.'
               },
               {
-                role: 'MBA Candidate',
-                company: 'Cornell University',
+                company: 'Cornell University — MBA',
                 year: '2019 – 2020',
                 desc: 'Merit-based scholarship + Fulbright. Focus on Leadership, Strategy, and AI.'
               },
               {
-                role: 'Founder & Engineer',
-                company: 'Solopreneur',
+                company: 'Product manager, Software Engineer, Solopreneur',
                 year: '2009 – 2019',
                 desc: 'A decade of experience as a founder, full-stack engineer, and product builder across various companies and projects.'
               },
@@ -261,15 +257,16 @@ function App() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="flex items-center gap-4 lg:gap-6 2xl:gap-8 p-4 lg:p-8 2xl:p-10 rounded-xl lg:rounded-2xl 2xl:rounded-3xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/5"
+                className="flex items-start gap-4 lg:gap-6 2xl:gap-8 p-4 lg:p-8 2xl:p-10 rounded-xl lg:rounded-2xl 2xl:rounded-3xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/5"
               >
-                <div className="w-12 h-12 lg:w-20 lg:h-20 2xl:w-24 2xl:h-24 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold text-xs lg:text-xl 2xl:text-2xl flex-shrink-0">
-                  {job.year.split('–')[0].trim()}
+                <div className="w-12 h-12 lg:w-20 lg:h-20 2xl:w-24 2xl:h-24 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold text-xs lg:text-xl 2xl:text-2xl flex-shrink-0 mt-1">
+                  {job.year.split('–')[0].split('-')[0].trim()}
                 </div>
                 <div className="text-left">
-                  <h4 className="font-bold text-lg lg:text-3xl 2xl:text-4xl text-white mb-1 lg:mb-2 2xl:mb-3">{job.role}</h4>
-                  <p className="text-gray-400 text-sm lg:text-xl 2xl:text-2xl mb-2">{job.company} • {job.year}</p>
-                  <p className="text-gray-500 text-xs lg:text-lg 2xl:text-xl leading-relaxed">{job.desc}</p>
+                  <h4 className="font-bold text-lg lg:text-3xl 2xl:text-4xl text-white mb-2 lg:mb-3 2xl:mb-4">
+                    {job.company} <span className="text-gray-500 font-normal text-base lg:text-xl 2xl:text-2xl ml-2">({job.year})</span>
+                  </h4>
+                  <p className="text-gray-400 text-sm lg:text-lg 2xl:text-xl leading-relaxed">{job.desc}</p>
                 </div>
               </motion.div>
             ))}
