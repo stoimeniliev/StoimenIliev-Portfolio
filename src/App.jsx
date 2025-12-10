@@ -233,25 +233,19 @@ function App() {
               {
                 company: 'Getsafe',
                 year: '2024 – 2025',
-                icon: Shield,
-                color: 'text-indigo-400',
-                bg: 'bg-indigo-500/20',
+                logo: 'https://cdn.sanity.io/images/p4gom3ch/production/9506e19db1103f9aad924d7f4d8ad11467b232ca-416x416.png?w=208&h=208&auto=format',
                 desc: 'Product Lead for Growth, Engagement, and Monetisation. Shipped the Safepoints rewards program and the Freemium Travel Insurance product, expanding activation and top-of-funnel reach.'
               },
               {
                 company: 'Trade Republic',
                 year: '2021 – 2024',
-                icon: TrendingUp,
-                color: 'text-cyan-400',
-                bg: 'bg-cyan-500/20',
+                logo: 'https://www.mygermanfinances.de/wp-content/uploads/2023/04/trade-republic-square-logo.png',
                 desc: 'One of the first customer-facing PMs during hyper-growth (joined when <40 Tech Org, <100k users). Delivered core zero-to-one initiatives including the Web Trading Platform, a unified internal workspace used company-wide, and an AI-first customer service system that replaced Zendesk.'
               },
               {
                 company: 'Cornell University — MBA',
                 year: '2019 – 2020',
-                icon: GraduationCap,
-                color: 'text-red-400',
-                bg: 'bg-red-500/20',
+                logo: 'https://images.seeklogo.com/logo-png/19/2/cornell-university-logo-png_seeklogo-190243.png',
                 desc: 'Merit-based scholarship + Fulbright. Focus on Leadership, Strategy, and AI.'
               },
               {
@@ -271,8 +265,12 @@ function App() {
                 transition={{ delay: index * 0.1 }}
                 className="flex items-start gap-4 lg:gap-6 2xl:gap-8 p-4 lg:p-8 2xl:p-10 rounded-xl lg:rounded-2xl 2xl:rounded-3xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/5"
               >
-                <div className={`w-12 h-12 lg:w-20 lg:h-20 2xl:w-24 2xl:h-24 rounded-full flex items-center justify-center flex-shrink-0 mt-1 ${job.bg} ${job.color}`}>
-                  <job.icon className="w-6 h-6 lg:w-10 lg:h-10 2xl:w-12 2xl:h-12" />
+                <div className={`w-12 h-12 lg:w-20 lg:h-20 2xl:w-24 2xl:h-24 rounded-full flex items-center justify-center flex-shrink-0 mt-1 overflow-hidden ${job.logo ? 'bg-white' : `${job.bg} ${job.color}`}`}>
+                  {job.logo ? (
+                    <img src={job.logo} alt={job.company} className="w-full h-full object-contain p-2" />
+                  ) : (
+                    <job.icon className="w-6 h-6 lg:w-10 lg:h-10 2xl:w-12 2xl:h-12" />
+                  )}
                 </div>
                 <div className="text-left">
                   <h4 className="font-bold text-lg lg:text-3xl 2xl:text-4xl text-white mb-2 lg:mb-3 2xl:mb-4">
