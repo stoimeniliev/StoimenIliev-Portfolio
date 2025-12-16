@@ -23,12 +23,12 @@
 }
 
 :root {
-  --bg-color: #050505;
-  --card-bg: #121212;
-  --text-primary: #ffffff;
-  --text-secondary: #a1a1aa;
-  --accent-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-  --accent-glow: 0 0 20px rgba(168, 85, 247, 0.4);
+  --bg-color: #faf7f2;
+  --card-bg: #ffffff;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --accent-gradient: linear-gradient(135deg, #f472b6 0%, #a78bfa 100%);
+  --accent-glow: 0 0 25px rgba(244, 114, 182, 0.3);
 }
 
 @layer base {
@@ -46,16 +46,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-color);
+  background: #f5f0e8;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333;
+  background: #d1ccc4;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #444;
+  background: #b8b3ab;
 }
 
 /* Components */
@@ -113,14 +113,179 @@
 
 .card {
   background-color: var(--card-bg);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: 16px;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: var(--accent-glow);
-  border-color: rgba(168, 85, 247, 0.3);
+  box-shadow: var(--accent-glow), 0 8px 30px rgba(0, 0, 0, 0.1);
+  border-color: rgba(244, 114, 182, 0.3);
+}
+
+/* Polaroid Photo Wall Styles */
+.polaroid-wall {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-height: 280px;
+  padding: 10px;
+}
+
+.polaroid-photo {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    z-index 0s;
+  margin: 0 -12px;
+  will-change: transform;
+}
+
+.polaroid-photo:first-child {
+  margin-left: 0;
+}
+
+.polaroid-photo:last-child {
+  margin-right: 0;
+}
+
+.polaroid-frame {
+  background: #fff;
+  padding: 5px 5px 32px 5px;
+  border-radius: 3px;
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 10px 25px rgba(0, 0, 0, 0.15),
+    0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: box-shadow;
+}
+
+.polaroid-photo:hover .polaroid-frame {
+  box-shadow:
+    0 25px 50px rgba(0, 0, 0, 0.2),
+    0 15px 30px rgba(244, 114, 182, 0.12),
+    0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.polaroid-image-container {
+  width: 120px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #f0f0f0;
+}
+
+.polaroid-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+.polaroid-photo:hover .polaroid-image {
+  transform: scale(1.03);
+}
+
+.polaroid-caption {
+  position: absolute;
+  bottom: 10px;
+  left: 8px;
+  right: 8px;
+  text-align: center;
+}
+
+.polaroid-caption p {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: #444;
+  margin: 0;
+  line-height: 1.4;
+  white-space: normal;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+}
+
+/* Hover state - bring to front */
+.polaroid-photo:hover {
+  z-index: 10 !important;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .polaroid-wall {
+    min-height: 380px;
+  }
+
+  .polaroid-photo {
+    margin: 0 -16px;
+  }
+
+  .polaroid-frame {
+    padding: 7px 7px 45px 7px;
+  }
+
+  .polaroid-image-container {
+    width: 170px;
+    height: 210px;
+  }
+
+  .polaroid-caption p {
+    font-size: 11px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .polaroid-wall {
+    min-height: 380px;
+  }
+
+  .polaroid-photo {
+    margin: 0 -18px;
+  }
+
+  .polaroid-frame {
+    padding: 7px 7px 45px 7px;
+  }
+
+  .polaroid-image-container {
+    width: 190px;
+    height: 240px;
+  }
+
+  .polaroid-caption p {
+    font-size: 11px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .polaroid-wall {
+    min-height: 650px;
+  }
+
+  .polaroid-photo {
+    margin: 0 -30px;
+  }
+
+  .polaroid-frame {
+    padding: 14px 14px 75px 14px;
+  }
+
+  .polaroid-image-container {
+    width: 400px;
+    height: 500px;
+  }
+
+  .polaroid-caption p {
+    font-size: 14px;
+  }
 }

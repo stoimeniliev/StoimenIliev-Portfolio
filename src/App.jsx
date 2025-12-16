@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { Github, Linkedin, Mail, ExternalLink, Cpu, Sparkles, Smile, ArrowRight, Video, Rocket } from 'lucide-react';
 import './index.css';
 
@@ -89,7 +89,7 @@ const polaroidConfigs = [
 const Section = ({ title, children, id, icon: Icon }) => (
   <section id={id} className="py-16 md:py-20 lg:py-24 2xl:py-32 px-4">
     <div className="container">
-      <motion.div
+      <Motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -98,7 +98,7 @@ const Section = ({ title, children, id, icon: Icon }) => (
       >
         {Icon && <Icon className="w-9 h-9 md:w-11 md:h-11 lg:w-12 lg:h-12 2xl:w-16 2xl:h-16 text-rose-400" />}
         <h2 className="text-3xl md:text-4xl lg:text-6xl 2xl:text-7xl font-bold text-center mb-0">{title}</h2>
-      </motion.div>
+      </Motion.div>
       {children}
     </div>
   </section>
@@ -106,7 +106,7 @@ const Section = ({ title, children, id, icon: Icon }) => (
 
 // New horizontal project layout with video embed
 const ProjectRow = ({ project, index, isReversed = false }) => (
-  <motion.div
+  <Motion.div
     initial={{ opacity: 0, y: 30 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
@@ -195,12 +195,12 @@ const ProjectRow = ({ project, index, isReversed = false }) => (
         </div>
       )}
     </div>
-  </motion.div>
+  </Motion.div>
 );
 
 // Polaroid Photo Component
 const PolaroidPhoto = ({ image, index, config }) => (
-  <motion.div
+  <Motion.div
     initial={{ opacity: 0, y: 50, rotate: config.rotate }}
     animate={{ opacity: 1, y: 0, rotate: config.rotate }}
     transition={{ duration: 0.6, delay: index * 0.15 }}
@@ -228,7 +228,7 @@ const PolaroidPhoto = ({ image, index, config }) => (
         <p>{image.caption}</p>
       </div>
     </div>
-  </motion.div>
+  </Motion.div>
 );
 
 function App() {
@@ -259,7 +259,7 @@ function App() {
         </div>
 
         <div className="container relative z-10 grid lg:grid-cols-2 gap-8 md:gap-10 lg:gap-12 2xl:gap-20 items-center">
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
@@ -283,10 +283,10 @@ function App() {
                 <a href="#" className="p-3 md:p-3.5 2xl:p-5 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors border border-gray-200 text-gray-600"><Mail className="w-5 h-5 md:w-6 md:h-6 2xl:w-8 2xl:h-8" /></a>
               </div>
             </div>
-          </motion.div>
+          </Motion.div>
 
           {/* Polaroid Photo Wall */}
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -302,7 +302,7 @@ function App() {
                 />
               ))}
             </div>
-          </motion.div>
+          </Motion.div>
         </div>
       </header>
 
@@ -327,7 +327,7 @@ function App() {
               </div>
             </div>
             {/* Cornell - moved to left column for balance */}
-            <motion.div
+            <Motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -343,7 +343,7 @@ function App() {
                 </h4>
                 <p className="text-gray-500 text-sm lg:text-base 2xl:text-lg leading-relaxed">Merit-based scholarship + Fulbright. Focus on Leadership, Strategy, and AI.</p>
               </div>
-            </motion.div>
+            </Motion.div>
           </div>
           <div className="space-y-4 lg:space-y-4 2xl:space-y-6">
             {/* Career Timeline - now without Cornell */}
@@ -369,7 +369,7 @@ function App() {
                 desc: 'A decade of experience as a founder, full-stack engineer, and product builder across various companies and projects.'
               },
             ].map((job, index) => (
-              <motion.div
+              <Motion.div
                 key={index}
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -390,7 +390,7 @@ function App() {
                   </h4>
                   <p className="text-gray-500 text-sm lg:text-base 2xl:text-lg leading-relaxed">{job.desc}</p>
                 </div>
-              </motion.div>
+              </Motion.div>
             ))}
           </div>
         </div>
