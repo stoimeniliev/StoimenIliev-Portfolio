@@ -233,7 +233,7 @@ const ProjectRow = ({ project, index, isReversed = false }) => {
         ) : tiktokVideoId ? (
           <div className="w-full max-w-[240px] sm:max-w-[260px] md:max-w-[280px] lg:max-w-[320px] 2xl:max-w-[360px] mx-auto">
             {/* iPhone-style frame */}
-            <div className="relative aspect-[9/19] rounded-[2.75rem] bg-gradient-to-b from-zinc-900 to-black shadow-2xl border border-zinc-800 overflow-hidden">
+            <div className="relative aspect-[9/16] rounded-[2.75rem] bg-gradient-to-b from-zinc-900 to-black shadow-2xl border border-zinc-800 overflow-hidden">
               {/* Bezel */}
               <div className="absolute inset-0 p-2 sm:p-2.5">
                 <div className="relative w-full h-full rounded-[2.2rem] bg-black overflow-hidden overscroll-none">
@@ -243,7 +243,7 @@ const ProjectRow = ({ project, index, isReversed = false }) => {
                   <iframe
                     src={`https://www.tiktok.com/embed/v2/${tiktokVideoId}?loop=1&rel=0`}
                     title={`${project.title} (TikTok)`}
-                    allow="encrypted-media; picture-in-picture; web-share"
+                    allow="autoplay; encrypted-media; picture-in-picture; web-share"
                     allowFullScreen
                     referrerPolicy="strict-origin-when-cross-origin"
                     scrolling="no"
