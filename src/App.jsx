@@ -605,6 +605,15 @@ function App() {
               />
             ))}
           </div>
+          <p className="text-gray-600 text-sm lg:text-base 2xl:text-xl mb-4 lg:mb-6">
+            Email:{' '}
+            <a
+              href="mailto:tito.iliev@gmail.com"
+              className="font-semibold text-gray-800 hover:text-rose-500 transition-colors"
+            >
+              tito.iliev@gmail.com
+            </a>
+          </p>
           <p className="text-gray-500 text-sm lg:text-base 2xl:text-xl">
             © {new Date().getFullYear()} Stoimen Iliev. All rights reserved.
           </p>
