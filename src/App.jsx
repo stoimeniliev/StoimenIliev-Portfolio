@@ -233,12 +233,16 @@ const ProjectRow = ({ project, index, isReversed = false }) => {
         ) : tiktokVideoId ? (
           <div className="w-full max-w-[240px] sm:max-w-[260px] md:max-w-[280px] lg:max-w-[320px] 2xl:max-w-[360px] mx-auto">
             {/* iPhone-style frame */}
-            <div className="relative aspect-[9/16] rounded-[2.75rem] bg-gradient-to-b from-zinc-900 to-black shadow-2xl border border-zinc-800 overflow-hidden">
+            <div
+              className="relative aspect-[9/16] rounded-[1.25rem] sm:rounded-[2.75rem] bg-gradient-to-b from-zinc-900 to-black shadow-2xl ring-1 ring-zinc-800 overflow-hidden"
+            >
               {/* Bezel */}
-              <div className="absolute inset-0 p-2 sm:p-2.5">
-                <div className="relative w-full h-full rounded-[2.2rem] bg-black overflow-hidden overscroll-none">
+              <div className="absolute inset-0 p-0 sm:p-2.5">
+                <div className="relative w-full h-full rounded-[1.1rem] sm:rounded-[2.2rem] bg-black overflow-hidden overscroll-none">
                   {/* Notch */}
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-b-[1.25rem] z-20 border-x border-b border-zinc-800/60" />
+                  <div
+                    className="hidden sm:block absolute top-0 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-b-[1.25rem] z-20 border-x border-b border-zinc-800/60 pointer-events-none"
+                  />
 
                   <iframe
                     src={`https://www.tiktok.com/embed/v2/${tiktokVideoId}?loop=1&rel=0`}
