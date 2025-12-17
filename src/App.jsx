@@ -241,7 +241,7 @@ const ProjectRow = ({ project, index, isReversed = false }) => {
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-b-[1.25rem] z-20 border-x border-b border-zinc-800/60" />
 
                   <iframe
-                    src={`https://www.tiktok.com/embed/v2/${tiktokVideoId}`}
+                    src={`https://www.tiktok.com/embed/v2/${tiktokVideoId}?loop=1&rel=0`}
                     title={`${project.title} (TikTok)`}
                     allow="encrypted-media; picture-in-picture; web-share"
                     allowFullScreen
