@@ -1,6 +1,6 @@
-import React from 'react';
-import { motion as Motion } from 'framer-motion';
-import { Github, Linkedin, Mail, ExternalLink, Cpu, Sparkles, Smile, ArrowRight, Video, Rocket } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { AnimatePresence, motion as Motion } from 'framer-motion';
+import { Github, Linkedin, Mail, ExternalLink, Cpu, Sparkles, Smile, Video, Rocket, Menu, X } from 'lucide-react';
 import './index.css';
 
 const projects = {
@@ -10,6 +10,8 @@ const projects = {
       title: 'Zfit - Zalando AI Try on',
       description: 'A Chrome extension that brings virtual try-on to Zalando. Upload a photo of yourself and see how clothes would look on you before buying. Built with AI-powered image generation to create realistic visualizations.',
       youtubeId: 'Fgr7ugdvEtw',
+      tiktokId: null,
+      tiktokUrl: null,
       github: 'https://github.com/stoimeniliev/zfit',
       demo: null,
       tags: ['Chrome Extension', 'Supabase', 'Node.js', 'AI/ML']
@@ -19,6 +21,8 @@ const projects = {
       title: 'xScheduler',
       description: 'xScheduler is a native macOS app that lets you draft, schedule, and publish posts to X.com / Twitter',
       youtubeId: 'kx1aOj6oC7U',
+      tiktokId: null,
+      tiktokUrl: null,
       github: 'https://github.com/stoimeniliev/tweetscheduler',
       demo: null,
       tags: ['Swift', 'X.com API', 'Supabase', 'Github Actions']
@@ -28,6 +32,8 @@ const projects = {
       title: 'Superhero',
       description: 'An open-source alternative to Grammarly and Superhuman. Fastest way to use AI on your computer. One click custom prompts to enhance all of your workflows',
       youtubeId: 'Q_58h_yuKOs',
+      tiktokId: null,
+      tiktokUrl: null,
       github: 'https://github.com/stoimeniliev/superhero',
       demo: null,
       tags: ['Swift']
@@ -39,6 +45,8 @@ const projects = {
       title: 'Notepad Ultra',
       description: 'A parody text editor that satirizes the aggressive subscription models of modern software. Want to use backspace? That\'ll be $2.99/month. Spell-check? Premium feature. Auto-save? Subscribe to our Ultra tier. A commentary on the state of software pricing.',
       youtubeId: null,
+      tiktokId: '7581970812085816590',
+      tiktokUrl: 'https://www.tiktok.com/@titoiliev/video/7581970812085816590',
       github: 'https://github.com/stoimeniliev/NotepadUltra',
       demo: 'https://stoimeniliev.github.io/NotepadUltra/',
       tags: ['React', 'Satire', 'Web App']
@@ -48,6 +56,8 @@ const projects = {
       title: 'Folder Ultra',
       description: 'The file manager that charges you per folder. Drag and drop? Premium. See file sizes? That\'s a subscription. A satirical take on how every basic feature is becoming a paid add-on.',
       youtubeId: null,
+      tiktokId: '7581789368822582583',
+      tiktokUrl: 'https://www.tiktok.com/@titoiliev/video/7581789368822582583',
       github: 'https://github.com/stoimeniliev/folder-ultra',
       demo: 'https://stoimeniliev.github.io/folder-ultra/',
       tags: ['React', 'Parody', 'UX Satire']
@@ -57,12 +67,31 @@ const projects = {
       title: 'Breathify',
       description: 'The AI excuse generator. Running late? Need to skip a meeting? Breathify generates wildly plausible excuses on demand. "My building\'s fire alarm went off" or "There was a water main break on my street" - all with convincing detail.',
       youtubeId: null,
+      tiktokId: '7581206517274152247',
+      tiktokUrl: 'https://www.tiktok.com/@titoiliev/video/7581206517274152247',
       github: null,
       demo: null,
       tags: ['AI', 'Humor', 'GPT-4']
     }
   ]
 };
+
+function getTikTokVideoId(project) {
+  const rawId = project?.tiktokId != null ? String(project.tiktokId).trim() : '';
+  if (/^\d{10,}$/.test(rawId)) return rawId;
+  if (!project?.tiktokUrl) return null;
+
+  try {
+    const url = new URL(project.tiktokUrl);
+    // Common format: https://www.tiktok.com/@user/video/1234567890123456789
+    const match = url.pathname.match(/\/video\/(\d+)/);
+    return match?.[1] ?? null;
+  } catch {
+    // If it's not a valid URL, allow passing the ID directly in `tiktokUrl`.
+    const match = String(project.tiktokUrl).match(/(\d{10,})/);
+    return match?.[1] ?? null;
+  }
+}
 
 const heroImages = [
   {
@@ -86,6 +115,31 @@ const polaroidConfigs = [
   { rotate: 6, translateX: -25, translateY: 15, zIndex: 1 },   // Right photo - tilts right
 ];
 
+const NAV_LINKS = [
+  { href: '#about', label: 'About' },
+  { href: '#productivity', label: 'Work' },
+  { href: '#fun', label: 'Fun' },
+];
+
+const SOCIAL_LINKS = [
+  { href: 'https://github.com/stoimeniliev', label: 'GitHub', Icon: Github, newTab: true },
+  // If your LinkedIn URL differs, replace this value.
+  { href: 'https://www.linkedin.com/in/stoimeniliev/', label: 'LinkedIn', Icon: Linkedin, newTab: true },
+  { href: 'mailto:hello@stoimeniliev.com', label: 'Email', Icon: Mail, newTab: false },
+];
+
+const SocialIconLink = ({ href, label, Icon, className, iconClassName, newTab }) => (
+  <a
+    href={href}
+    aria-label={label}
+    title={label}
+    {...(newTab ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+    className={className}
+  >
+    {Icon ? <Icon className={iconClassName} /> : null}
+  </a>
+);
+
 const Section = ({ title, children, id, icon: Icon }) => (
   <section id={id} className="py-16 md:py-20 lg:py-24 2xl:py-32 px-4">
     <div className="container">
@@ -105,98 +159,125 @@ const Section = ({ title, children, id, icon: Icon }) => (
 );
 
 // New horizontal project layout with video embed
-const ProjectRow = ({ project, index, isReversed = false }) => (
-  <Motion.div
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ delay: index * 0.1 }}
-    className={`grid lg:grid-cols-2 gap-8 lg:gap-12 2xl:gap-16 items-center ${isReversed ? 'lg:direction-rtl' : ''}`}
-  >
-    {/* Left side - Info */}
-    <div className={`space-y-5 lg:space-y-6 ${isReversed ? 'lg:order-2' : ''}`}>
-      <h3 className="text-2xl md:text-3xl lg:text-3xl 2xl:text-5xl font-bold text-gray-800">{project.title}</h3>
-      <p className="text-gray-500 text-base md:text-lg lg:text-lg 2xl:text-xl leading-relaxed">{project.description}</p>
+const ProjectRow = ({ project, index, isReversed = false }) => {
+  const tiktokVideoId = getTikTokVideoId(project);
 
-      {/* Tags */}
-      <div className="flex flex-wrap gap-2 md:gap-2.5">
-        {project.tags.map(tag => (
-          <span key={tag} className="px-3 py-1.5 md:px-4 md:py-2 bg-rose-50 rounded-full text-xs md:text-sm 2xl:text-base text-rose-600 border border-rose-100 font-medium">
-            {tag}
-          </span>
-        ))}
-      </div>
+  return (
+    <Motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.1 }}
+      className={`grid lg:grid-cols-2 gap-8 lg:gap-12 2xl:gap-16 items-center ${isReversed ? 'lg:direction-rtl' : ''}`}
+    >
+      {/* Left side - Info */}
+      <div className={`space-y-5 lg:space-y-6 ${isReversed ? 'lg:order-2' : ''}`}>
+        <h3 className="text-2xl md:text-3xl lg:text-3xl 2xl:text-5xl font-bold text-gray-800">{project.title}</h3>
+        <p className="text-gray-500 text-base md:text-lg lg:text-lg 2xl:text-xl leading-relaxed">{project.description}</p>
 
-      {/* Action Buttons */}
-      <div className="flex flex-wrap gap-3 pt-2">
-        {project.demo && (
-          <a
-            href={project.demo}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-gray-800 text-white px-6 py-3 rounded-full font-bold text-sm md:text-base hover:bg-gray-700 transition-colors"
-          >
-            <ExternalLink size={18} /> Try It
-          </a>
-        )}
-        {project.github && (
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-white text-gray-800 px-6 py-3 rounded-full font-bold text-sm md:text-base hover:bg-gray-100 transition-colors border border-gray-200"
-          >
-            <Github size={18} /> View Code
-          </a>
-        )}
-        {project.youtubeId && (
-          <a
-            href={`https://www.youtube.com/watch?v=${project.youtubeId}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-red-600 text-white px-6 py-3 rounded-full font-bold text-sm md:text-base hover:bg-red-700 transition-colors"
-          >
-            <Video size={18} /> Watch Video
-          </a>
-        )}
-      </div>
-    </div>
-
-    {/* Right side - Video/Preview */}
-    <div className={`${isReversed ? 'lg:order-1' : ''}`}>
-      {project.youtubeId ? (
-        <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-xl border border-gray-200">
-          <iframe
-            src={`https://www.youtube.com/embed/${project.youtubeId}`}
-            title={project.title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className="absolute inset-0 w-full h-full"
-          />
+        {/* Tags */}
+        <div className="flex flex-wrap gap-2 md:gap-2.5">
+          {project.tags.map(tag => (
+            <span key={tag} className="px-3 py-1.5 md:px-4 md:py-2 bg-rose-50 rounded-full text-xs md:text-sm 2xl:text-base text-rose-600 border border-rose-100 font-medium">
+              {tag}
+            </span>
+          ))}
         </div>
-      ) : (
-        <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-xl border border-gray-200 bg-gradient-to-br from-rose-100 to-violet-100 flex items-center justify-center">
-          <div className="text-center p-8">
-            <div className="w-16 h-16 mx-auto mb-4 bg-white/80 rounded-full flex items-center justify-center">
-              <Sparkles className="w-8 h-8 text-rose-500" />
-            </div>
-            <p className="text-gray-600 font-medium">Demo coming soon</p>
-            {project.demo && (
-              <a
-                href={project.demo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 mt-4 text-rose-600 font-bold hover:text-rose-700"
-              >
-                Try it now <ExternalLink size={16} />
-              </a>
-            )}
+
+        {/* Action Buttons */}
+        <div className="flex flex-wrap gap-3 pt-2">
+          {project.demo && (
+            <a
+              href={project.demo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 bg-gray-800 text-white px-6 py-3 rounded-full font-bold text-sm md:text-base hover:bg-gray-700 transition-colors"
+            >
+              <ExternalLink size={18} /> Try It
+            </a>
+          )}
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 bg-white text-gray-800 px-6 py-3 rounded-full font-bold text-sm md:text-base hover:bg-gray-100 transition-colors border border-gray-200"
+            >
+              <Github size={18} /> View Code
+            </a>
+          )}
+          {project.youtubeId && (
+            <a
+              href={`https://www.youtube.com/watch?v=${project.youtubeId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 bg-red-600 text-white px-6 py-3 rounded-full font-bold text-sm md:text-base hover:bg-red-700 transition-colors"
+            >
+              <Video size={18} /> Watch Video
+            </a>
+          )}
+        </div>
+      </div>
+
+      {/* Right side - Video/Preview */}
+      <div className={`${isReversed ? 'lg:order-1' : ''}`}>
+        {project.youtubeId ? (
+          <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-xl border border-gray-200">
+            <iframe
+              src={`https://www.youtube.com/embed/${project.youtubeId}`}
+              title={project.title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="absolute inset-0 w-full h-full"
+            />
           </div>
-        </div>
-      )}
-    </div>
-  </Motion.div>
-);
+        ) : tiktokVideoId ? (
+          <div className="w-full max-w-[240px] sm:max-w-[260px] md:max-w-[280px] lg:max-w-[320px] 2xl:max-w-[360px] mx-auto">
+            {/* iPhone-style frame */}
+            <div className="relative aspect-[9/19] rounded-[2.75rem] bg-gradient-to-b from-zinc-900 to-black shadow-2xl border border-zinc-800 overflow-hidden">
+              {/* Bezel */}
+              <div className="absolute inset-0 p-2 sm:p-2.5">
+                <div className="relative w-full h-full rounded-[2.2rem] bg-black overflow-hidden overscroll-none">
+                  {/* Notch */}
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-b-[1.25rem] z-20 border-x border-b border-zinc-800/60" />
+
+                  <iframe
+                    src={`https://www.tiktok.com/embed/v2/${tiktokVideoId}`}
+                    title={`${project.title} (TikTok)`}
+                    allow="encrypted-media; picture-in-picture; web-share"
+                    allowFullScreen
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    scrolling="no"
+                    className="absolute inset-0 w-full h-full"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-xl border border-gray-200 bg-gradient-to-br from-rose-100 to-violet-100 flex items-center justify-center">
+            <div className="text-center p-8">
+              <div className="w-16 h-16 mx-auto mb-4 bg-white/80 rounded-full flex items-center justify-center">
+                <Sparkles className="w-8 h-8 text-rose-500" />
+              </div>
+              <p className="text-gray-600 font-medium">Demo coming soon</p>
+              {project.demo && (
+                <a
+                  href={project.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 mt-4 text-rose-600 font-bold hover:text-rose-700"
+                >
+                  Try it now <ExternalLink size={16} />
+                </a>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </Motion.div>
+  );
+};
 
 // Polaroid Photo Component
 const PolaroidPhoto = ({ image, index, config }) => (
@@ -232,6 +313,24 @@ const PolaroidPhoto = ({ image, index, config }) => (
 );
 
 function App() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') setIsMobileMenuOpen(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
   return (
     <div className="min-h-screen text-gray-800">
       {/* Navigation */}
@@ -239,16 +338,78 @@ function App() {
         <div className="container flex items-center justify-between h-14 md:h-16 lg:h-18 2xl:h-24">
           <span className="font-bold text-lg md:text-xl lg:text-2xl 2xl:text-3xl tracking-tight text-gray-800">Stoimen<span className="text-rose-500">Iliev</span></span>
           <div className="hidden md:flex gap-5 lg:gap-8 2xl:gap-10 text-sm lg:text-base 2xl:text-xl font-medium text-gray-600">
-            <a href="#about" className="hover:text-rose-500 transition-colors">About</a>
-            <a href="#productivity" className="hover:text-rose-500 transition-colors">Work</a>
-            <a href="#fun" className="hover:text-rose-500 transition-colors">Fun</a>
+            {NAV_LINKS.map((link) => (
+              <a key={link.href} href={link.href} className="hover:text-rose-500 transition-colors">
+                {link.label}
+              </a>
+            ))}
           </div>
-          {/* Mobile Menu Icon (Placeholder) */}
-          <div className="md:hidden text-gray-600">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-          </div>
+          <button
+            type="button"
+            className="md:hidden text-gray-700 p-2 rounded-lg hover:bg-white/60 transition-colors"
+            aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-nav"
+            onClick={() => setIsMobileMenuOpen((v) => !v)}
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
       </nav>
+
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <Motion.div
+            className="fixed inset-0 z-40 md:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <button
+              type="button"
+              className="absolute inset-0 bg-black/20 backdrop-blur-[2px]"
+              aria-label="Close menu"
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
+            <Motion.div
+              id="mobile-nav"
+              className="relative mt-14 bg-[#faf7f2] border-b border-gray-200/70"
+              initial={{ y: -10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -10, opacity: 0 }}
+              transition={{ duration: 0.18 }}
+            >
+              <div className="container py-5">
+                <div className="flex flex-col gap-3 text-base font-semibold text-gray-800">
+                  {NAV_LINKS.map((link) => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      className="py-2 px-2 rounded-lg hover:bg-white/60 transition-colors"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
+                <div className="mt-5 flex gap-3">
+                  {SOCIAL_LINKS.map((s) => (
+                    <SocialIconLink
+                      key={s.label}
+                      href={s.href}
+                      label={s.label}
+                      Icon={s.Icon}
+                      newTab={s.newTab}
+                      className="p-3 bg-white/70 rounded-full hover:bg-white transition-colors border border-gray-200 text-gray-700"
+                      iconClassName="w-5 h-5"
+                    />
+                  ))}
+                </div>
+              </div>
+            </Motion.div>
+          </Motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Hero Section */}
       <header className="relative min-h-[auto] md:min-h-[80vh] flex items-center justify-center overflow-hidden pt-20 pb-8 md:pt-24 md:pb-0">
@@ -266,21 +427,29 @@ function App() {
             className="text-center lg:text-left"
           >
             <h2 className="text-rose-500 font-medium mb-2 md:mb-3 lg:mb-5 2xl:mb-6 tracking-wide uppercase text-xs md:text-sm lg:text-xs 2xl:text-xl">Product Leader, Vibe Coder & AI Enthusiast</h2>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[50px] 2xl:text-9xl font-bold mb-4 md:mb-5 lg:mb-7 2xl:mb-10 leading-tight text-gray-800">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl 2xl:text-9xl font-bold mb-4 md:mb-5 lg:mb-7 2xl:mb-10 leading-tight text-gray-800">
               Hi 👋 <br />
               <span className="gradient-text">I'm Tito!</span>
             </h1>
-            <p className="text-gray-500 text-sm md:text-base lg:text-lg 2xl:text-2xl mb-5 md:mb-7 lg:mb-10 2xl:mb-12 max-w-md md:max-w-xl 2xl:max-w-3xl mx-auto lg:mx-0 leading-relaxed px-4 md:px-0">
-            I build products that customers love, teams thrive on, and businesses grow from. <br /><br /> I'm currently on a career break & experiment with AI.
+            <p className="text-gray-500 text-sm md:text-base lg:text-2xl 2xl:text-2xl mb-5 md:mb-7 lg:mb-10 2xl:mb-12 max-w-md md:max-w-xl 2xl:max-w-3xl mx-auto lg:mx-0 leading-relaxed px-4 md:px-0">
+            I build products that customers love, teams thrive on, and businesses grow from. 
             </p>
             <div className="flex flex-col sm:flex-row gap-3 md:gap-4 lg:gap-5 2xl:gap-6 justify-center lg:justify-start">
               <a href="#productivity" className="bg-gray-800 text-white px-6 py-3 md:px-8 md:py-3.5 2xl:px-12 2xl:py-5 rounded-full font-bold text-sm md:text-base lg:text-lg 2xl:text-xl hover:bg-gray-700 transition-colors flex items-center justify-center gap-2 2xl:gap-3">
-                Fun projects ↓ <ArrowRight className="w-4 h-4 md:w-5 md:h-5 2xl:w-7 2xl:h-7" />
+                Fun projects ↓
               </a>
               <div className="flex gap-3 md:gap-4 justify-center">
-                <a href="#" className="p-3 md:p-3.5 2xl:p-5 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors border border-gray-200 text-gray-600"><Github className="w-5 h-5 md:w-6 md:h-6 2xl:w-8 2xl:h-8" /></a>
-                <a href="#" className="p-3 md:p-3.5 2xl:p-5 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors border border-gray-200 text-gray-600"><Linkedin className="w-5 h-5 md:w-6 md:h-6 2xl:w-8 2xl:h-8" /></a>
-                <a href="#" className="p-3 md:p-3.5 2xl:p-5 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors border border-gray-200 text-gray-600"><Mail className="w-5 h-5 md:w-6 md:h-6 2xl:w-8 2xl:h-8" /></a>
+                {SOCIAL_LINKS.map((s) => (
+                  <SocialIconLink
+                    key={s.label}
+                    href={s.href}
+                    label={s.label}
+                    Icon={s.Icon}
+                    newTab={s.newTab}
+                    className="p-3 md:p-3.5 2xl:p-5 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors border border-gray-200 text-gray-600"
+                    iconClassName="w-5 h-5 md:w-6 md:h-6 2xl:w-8 2xl:h-8"
+                  />
+                ))}
               </div>
             </div>
           </Motion.div>
@@ -399,7 +568,7 @@ function App() {
       {/* Productivity Projects */}
       <Section id="productivity" title="AI Playground" icon={Sparkles}>
         <p className="text-center text-gray-500 max-w-3xl 2xl:max-w-4xl mx-auto mb-12 lg:mb-16 2xl:mb-20 text-base md:text-lg lg:text-lg 2xl:text-2xl">
-        I vibe code tools to make life a little easier. No gatekeeping - every bit of code is available on my GitHub. My workflow is a combination of Cursor, Antigravity, Xcode, Gemini, ChatGPT, Supabase, Vercel, Replicate.com
+        Currently doing a career break and I vibe code tools to make life a little easier. No gatekeeping - every bit of code is available on my GitHub. My workflow is a combination of Cursor, Antigravity, Xcode, Gemini, ChatGPT, Supabase, Vercel, Replicate.com
         </p>
         <div className="space-y-16 lg:space-y-20 2xl:space-y-24">
           {projects.productivity.map((project, index) => (
@@ -425,9 +594,17 @@ function App() {
         <div className="container text-center">
           <h2 className="text-2xl md:text-3xl lg:text-3xl 2xl:text-5xl font-bold mb-6 lg:mb-8 2xl:mb-12 text-gray-800">Let's Build Something Amazing</h2>
           <div className="flex justify-center gap-5 lg:gap-6 2xl:gap-8 mb-6 lg:mb-10 2xl:mb-14">
-            <a href="#" className="text-gray-400 hover:text-rose-500 transition-colors"><Github className="w-6 h-6 lg:w-7 lg:h-7 2xl:w-9 2xl:h-9" /></a>
-            <a href="#" className="text-gray-400 hover:text-rose-500 transition-colors"><Linkedin className="w-6 h-6 lg:w-7 lg:h-7 2xl:w-9 2xl:h-9" /></a>
-            <a href="#" className="text-gray-400 hover:text-rose-500 transition-colors"><Mail className="w-6 h-6 lg:w-7 lg:h-7 2xl:w-9 2xl:h-9" /></a>
+            {SOCIAL_LINKS.map((s) => (
+              <SocialIconLink
+                key={s.label}
+                href={s.href}
+                label={s.label}
+                Icon={s.Icon}
+                newTab={s.newTab}
+                className="text-gray-400 hover:text-rose-500 transition-colors"
+                iconClassName="w-6 h-6 lg:w-7 lg:h-7 2xl:w-9 2xl:h-9"
+              />
+            ))}
           </div>
           <p className="text-gray-500 text-sm lg:text-base 2xl:text-xl">
             © {new Date().getFullYear()} Stoimen Iliev. All rights reserved.
