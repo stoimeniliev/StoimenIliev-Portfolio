@@ -123,9 +123,8 @@ const NAV_LINKS = [
 
 const SOCIAL_LINKS = [
   { href: 'https://github.com/stoimeniliev', label: 'GitHub', Icon: Github, newTab: true },
-  // If your LinkedIn URL differs, replace this value.
   { href: 'https://www.linkedin.com/in/stoimeniliev/', label: 'LinkedIn', Icon: Linkedin, newTab: true },
-  { href: 'mailto:hello@stoimeniliev.com', label: 'Email', Icon: Mail, newTab: false },
+  { href: 'mailto:tito.iliev@gmail.com', label: 'Email', Icon: Mail, newTab: false },
 ];
 
 const SocialIconLink = ({ href, label, Icon, className, iconClassName, newTab }) => (
