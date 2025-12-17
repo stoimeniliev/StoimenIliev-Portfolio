@@ -159,7 +159,8 @@
 
 .polaroid-frame {
   background: #fff;
-  padding: 5px 5px 32px 5px;
+  /* Extra bottom padding so 2-line captions fit on mobile */
+  padding: 5px 5px 60px 5px;
   border-radius: 3px;
   box-shadow:
     0 4px 6px rgba(0, 0, 0, 0.1),

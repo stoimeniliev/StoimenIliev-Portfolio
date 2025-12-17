@@ -184,13 +184,13 @@ const ProjectRow = ({ project, index, isReversed = false }) => {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-wrap gap-3 pt-2">
+        <div className="flex flex-wrap gap-2 sm:gap-3 pt-2">
           {project.demo && (
             <a
               href={project.demo}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-gray-800 text-white px-6 py-3 rounded-full font-bold text-sm md:text-base hover:bg-gray-700 transition-colors"
+              className="flex items-center gap-2 bg-gray-800 text-white px-4 py-2.5 sm:px-5 md:px-6 md:py-3 rounded-full font-bold text-sm md:text-base hover:bg-gray-700 transition-colors"
             >
               <ExternalLink size={18} /> Try It
             </a>
@@ -200,7 +200,7 @@ const ProjectRow = ({ project, index, isReversed = false }) => {
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-white text-gray-800 px-6 py-3 rounded-full font-bold text-sm md:text-base hover:bg-gray-100 transition-colors border border-gray-200"
+              className="flex items-center gap-2 bg-white text-gray-800 px-4 py-2.5 sm:px-5 md:px-6 md:py-3 rounded-full font-bold text-sm md:text-base hover:bg-gray-100 transition-colors border border-gray-200"
             >
               <Github size={18} /> View Code
             </a>
@@ -210,9 +210,9 @@ const ProjectRow = ({ project, index, isReversed = false }) => {
               href={`https://www.youtube.com/watch?v=${project.youtubeId}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-red-600 text-white px-6 py-3 rounded-full font-bold text-sm md:text-base hover:bg-red-700 transition-colors"
+              className="flex items-center gap-2 bg-red-600 text-white px-4 py-2.5 sm:px-5 md:px-6 md:py-3 rounded-full font-bold text-sm md:text-base hover:bg-red-700 transition-colors"
             >
-              <Video size={18} /> Watch Video
+              <Video size={18} /> Watch
             </a>
           )}
         </div>
